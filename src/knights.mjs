@@ -62,10 +62,10 @@ export default class Knights {
 
   helperQueue(queue, startingNode, endingNode, visited, path = null) {
     if (startingNode === endingNode) {
-      return 'hey';
+      return 'Found';
     }
     if (queue.length < 1) {
-      return 'hey';
+      return 'List is empty';
     }
     const currentNode = queue[0];
     const pos = `${currentNode.row},${currentNode.column}`;
@@ -76,70 +76,76 @@ export default class Knights {
     }
     visited.add(pos);
     console.log('---------------------------');
-    console.log(queue[0]);
 
-    const cNodeEdBot = currentNode.edgeBottom;
-    const cNodeEdTop = currentNode.edgeTop;
-    const cNodeEdRight = currentNode.edgeRight;
-    const cNodeEdLeft = currentNode.edgeLeft;
     // Give the edge of Bottom Right and Bottom Left for real knight move
+    const knightMoveBottomRight =
+      currentNode?.edgeBottom?.node1.edgeRight?.node1.edgeRight;
+    const knightMoveBottomLeft =
+      currentNode?.edgeBottom?.node1.edgeLeft?.node2.edgeLeft;
 
     // Give the edge of Top Right and Top Left for real knight move
+    const knightMoveTopRight =
+      currentNode?.edgeTop?.node2?.edgeRight?.node1?.edgeRight;
 
+    const knightMoveTopLeft =
+      currentNode?.edgeTop?.node2?.edgeLeft?.node2?.edgeLeft;
     // Give the edge of Right Top and Right Bottom for real knight move
+    const knightMoveRightTop =
+      currentNode?.edgeRight?.node1?.edgeTop?.node2?.edgeTop;
 
+    const knightMoveRightBottom =
+      currentNode?.edgeRight?.node1?.edgeBottom?.node1?.edgeBottom;
+    console.log(`This is ${knightMoveRightTop}`);
     // Give the edge of Left Top and Left Bottom for real knight move
+    const knightMoveLeftTop =
+      currentNode?.edgeLeft?.node2?.edgeTop?.node2?.edgeTop?.node2;
 
-    if (
-      cNodeEdBot !== null &&
-      currentNode.edgeBottom.node1.edgeRight.node1.edgeRight !== null
-    ) {
-      queue.push(currentNode.edgeBottom.node1.edgeRight.node1.edgeRight.node1);
+    const knightMoveLeftBottom =
+      currentNode?.edgeLeft?.node2?.edgeBottom?.node1?.edgeBottom;
+
+    if (knightMoveBottomRight === undefined || knightMoveBottomRight === null) {
+      console.log('No');
+    } else {
+      queue.push(knightMoveBottomRight.node1);
     }
-    if (
-      cNodeEdBot !== null &&
-      currentNode.edgeBottom.node1.edgeLeft.node2.edgeLeft !== null
-    ) {
-      queue.push(currentNode.edgeBottom.node1.edgeLeft.node2.edgeLeft.node2);
+    if (knightMoveBottomLeft === undefined || knightMoveBottomLeft === null) {
+      console.log('NO');
+    } else {
+      queue.push(knightMoveBottomLeft.node2);
     }
-    if (
-      cNodeEdTop !== null &&
-      currentNode.edgeTop.node2.edgeRight.node1.edgeRight !== null
-    ) {
-      queue.push(currentNode.edgeTop.node2.edgeRight.node1.edgeRight.node1);
+    if (knightMoveTopRight === null || knightMoveTopRight === undefined) {
+      console.log('No');
+    } else {
+      queue.push(knightMoveTopRight.node1);
     }
-    if (
-      cNodeEdTop !== null &&
-      currentNode.edgeTop.node2.edgeLeft.node2.edgeLeft !== null
-    ) {
-      queue.push(currentNode.edgeTop.node2.edgeLeft.node2.edgeLeft.node2);
+    if (knightMoveTopLeft === null || knightMoveTopLeft === undefined) {
+      console.log('No');
+    } else {
+      queue.push(knightMoveTopLeft.node2);
     }
-    if (
-      cNodeEdRight !== null &&
-      currentNode.edgeRight.node1.edgeTop.node2.edgeTop !== null
-    ) {
-      queue.push(currentNode.edgeRight.node1.edgeTop.node2.edgeTop.node2);
+    if (knightMoveRightTop === undefined || knightMoveRightTop === null) {
+      console.log('No');
+    } else {
+      queue.push(knightMoveRightTop.node2);
     }
-    if (
-      cNodeEdRight !== null &&
-      currentNode.edgeRight.node1.edgeBottom.node1.edgeBottom !== null
-    ) {
-      queue.push(currentNode.edgeRight.node1.edgeBottom.node1.edgeBottom.node1);
+    if (knightMoveRightBottom === null || knightMoveRightBottom === undefined) {
+      console.log('NO');
+    } else {
+      queue.push(knightMoveRightBottom.node1);
     }
-    if (
-      cNodeEdLeft !== null &&
-      currentNode.edgeLeft.node2.edgeTop.node2.edgeTop !== null
-    ) {
-      queue.push(currentNode.edgeLeft.node2.edgeTop.node2.edgeTop.node2);
+    if (knightMoveLeftTop === null || knightMoveLeftTop === undefined) {
+      console.log('NO');
+    } else {
+      queue.push(knightMoveLeftTop.node2);
     }
-    if (
-      cNodeEdLeft !== null &&
-      currentNode.edgeLeft.node2.edgeBottom.node1.edgeBottom !== null
-    ) {
-      queue.push(currentNode.edgeLeft.node2.edgeBottom.node1.edgeBottom.node1);
+    if (knightMoveLeftBottom === null || knightMoveLeftBottom === undefined) {
+      console.log('NO');
+    } else {
+      queue.push(knightMoveLeftBottom.node1);
     }
 
     queue.shift();
+    console.log(visited);
     this.helperQueue(queue, startingNode, endingNode, visited, path);
   }
 
