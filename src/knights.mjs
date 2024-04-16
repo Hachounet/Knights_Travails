@@ -51,37 +51,96 @@ export default class Knights {
       (value) => value.row === endingRow && value.column === endingCol
     );
     const queue = [startingNode];
-    const counter = this.helperQueue(queue, startingNode, endingNode, visited);
-    return counter;
+    const shortestPath = this.helperQueue(
+      queue,
+      startingNode,
+      endingNode,
+      visited
+    );
+    return shortestPath;
   }
 
-  helperQueue(queue, startingNode, endingNode, visited) {
+  helperQueue(queue, startingNode, endingNode, visited, path = null) {
     if (startingNode === endingNode) {
-      return 'Found';
+      return 'hey';
+    }
+    if (queue.length < 1) {
+      return 'hey';
     }
     const currentNode = queue[0];
     const pos = `${currentNode.row},${currentNode.column}`;
+
     const isVisited = this.isVisited(pos, visited);
     if (isVisited === true) {
-      return 0;
+      return 'Hey';
     }
-
     visited.add(pos);
+    console.log('---------------------------');
+    console.log(queue[0]);
 
-    if (currentNode.edgeBottom !== null) {
-      queue.push(currentNode.edgeBottom.node1);
+    const cNodeEdBot = currentNode.edgeBottom;
+    const cNodeEdTop = currentNode.edgeTop;
+    const cNodeEdRight = currentNode.edgeRight;
+    const cNodeEdLeft = currentNode.edgeLeft;
+    // Give the edge of Bottom Right and Bottom Left for real knight move
+
+    // Give the edge of Top Right and Top Left for real knight move
+
+    // Give the edge of Right Top and Right Bottom for real knight move
+
+    // Give the edge of Left Top and Left Bottom for real knight move
+
+    if (
+      cNodeEdBot !== null &&
+      currentNode.edgeBottom.node1.edgeRight.node1.edgeRight !== null
+    ) {
+      queue.push(currentNode.edgeBottom.node1.edgeRight.node1.edgeRight.node1);
     }
-    if (currentNode.edgeTop !== null) {
-      queue.push(currentNode.edgeTop.node1);
+    if (
+      cNodeEdBot !== null &&
+      currentNode.edgeBottom.node1.edgeLeft.node2.edgeLeft !== null
+    ) {
+      queue.push(currentNode.edgeBottom.node1.edgeLeft.node2.edgeLeft.node2);
     }
-    if (currentNode.edgeLeft !== null) {
-      queue.push(currentNode.edgeLeft.node1);
+    if (
+      cNodeEdTop !== null &&
+      currentNode.edgeTop.node2.edgeRight.node1.edgeRight !== null
+    ) {
+      queue.push(currentNode.edgeTop.node2.edgeRight.node1.edgeRight.node1);
     }
-    if (currentNode.edgeRight !== null) {
-      queue.push(currentNode.edgeRight.node1);
+    if (
+      cNodeEdTop !== null &&
+      currentNode.edgeTop.node2.edgeLeft.node2.edgeLeft !== null
+    ) {
+      queue.push(currentNode.edgeTop.node2.edgeLeft.node2.edgeLeft.node2);
     }
+    if (
+      cNodeEdRight !== null &&
+      currentNode.edgeRight.node1.edgeTop.node2.edgeTop !== null
+    ) {
+      queue.push(currentNode.edgeRight.node1.edgeTop.node2.edgeTop.node2);
+    }
+    if (
+      cNodeEdRight !== null &&
+      currentNode.edgeRight.node1.edgeBottom.node1.edgeBottom !== null
+    ) {
+      queue.push(currentNode.edgeRight.node1.edgeBottom.node1.edgeBottom.node1);
+    }
+    if (
+      cNodeEdLeft !== null &&
+      currentNode.edgeLeft.node2.edgeTop.node2.edgeTop !== null
+    ) {
+      queue.push(currentNode.edgeLeft.node2.edgeTop.node2.edgeTop.node2);
+    }
+    if (
+      cNodeEdLeft !== null &&
+      currentNode.edgeLeft.node2.edgeBottom.node1.edgeBottom !== null
+    ) {
+      queue.push(currentNode.edgeLeft.node2.edgeBottom.node1.edgeBottom.node1);
+    }
+
     queue.shift();
-    this.helperQueue(queue, visited);
+    this.helperQueue(queue, startingNode, endingNode, visited, path);
   }
 
   isVisited(pos, visited) {

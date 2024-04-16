@@ -6,6 +6,6 @@ import Knights from './knights.mjs';
 function DriverScript() {
   const KnightsAlgo = new Knights();
   KnightsAlgo.buildGraph();
-  KnightsAlgo.knightMoves([0, 0], [7, 7]);
+  KnightsAlgo.knightMoves([3, 6], [7, 7]);
 }
 DriverScript();
