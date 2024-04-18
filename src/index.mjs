@@ -1,4 +1,3 @@
-
 /* eslint-disable no-console */
 import Graph from './graph.mjs';
 
@@ -7,4 +6,3 @@ newGraph.populateGraph();
 newGraph.populateEdges();
 
 newGraph.bfs('00', '12');
-
