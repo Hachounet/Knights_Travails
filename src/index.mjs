@@ -1,11 +1,10 @@
-/* eslint-disable import/extensions */
+
 /* eslint-disable no-console */
+import Graph from './graph.mjs';
 
-import Knights from './knights.mjs';
+const newGraph = new Graph();
+newGraph.populateGraph();
+newGraph.populateEdges();
 
-function DriverScript() {
-  const KnightsAlgo = new Knights();
-  KnightsAlgo.buildGraph();
-  KnightsAlgo.knightMoves([0, 0], [7, 7]);
-}
-DriverScript();
+newGraph.bfs('00', '12');
+
