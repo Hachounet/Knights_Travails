@@ -53,30 +53,28 @@ export default class Graph {
 
   bfs(source, destination) {
     const queue = [source];
-    const result = [];
-    const visited = new Set();
-    let knightMoves = 0;
+    const visited = new Map();
+
     while (queue.length !== 0) {
-      let max = queue[0];
-      for (let i = 0; i < queue.length; i += 1) {
-        if (queue[i] > max) {
-          max = queue[i];
-        }
-      }
-      let current = max;
+      const current = queue.shift();
 
-      while (visited.has(current)) {
-        current = queue.shift();
-      }
-      console.log(visited);
       if (current === destination) {
-        console.log('Ive found the position.');
-        console.log(`This is number of moves before found : ${knightMoves}`);
-        return;
-      }
-      knightMoves += 1;
+        console.log('Ive found a path.');
 
-      visited.add(current);
+        const path = [current];
+        let actualNode = current;
+        while (!path.includes(source)) {
+          const child = visited.get(actualNode);
+          path.push(child);
+          actualNode = child;
+        }
+
+        const resultFiltered = path.filter((item) => item !== source);
+        console.log(
+          `It take ${resultFiltered.length} moves to go from ${source} to ${destination}`
+        );
+        console.log(resultFiltered);
+      }
 
       const neighbor = this.adjacencyList[current];
 
@@ -84,6 +82,8 @@ export default class Graph {
         if (visited.has(value)) {
           return;
         }
+
+        visited.set(value, current);
 
         queue.push(value);
       });

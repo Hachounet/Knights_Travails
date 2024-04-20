@@ -5,4 +5,4 @@ const newGraph = new Graph();
 newGraph.populateGraph();
 newGraph.populateEdges();
 
-newGraph.bfs('00', '77');
+newGraph.bfs('00', '55');
